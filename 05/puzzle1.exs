@@ -1,4 +1,3 @@
-require IEx;
 defmodule Stack do
 
   defstruct elements: []
@@ -64,6 +63,7 @@ defmodule Visualizer do
 end
 
 defmodule Cargo do
+  # Test Input
   # stack1 = struct(Stack, %{elements: ["Z","N"]})
   # stack2 = struct(Stack, %{elements: ["M", "C", "D"]})
   # stack3 = struct(Stack, %{elements: ["P"]})
@@ -78,7 +78,6 @@ defmodule Cargo do
   stack7 = struct(Stack, %{elements: ["V", "B", "D", "R", "G", "C", "Q", "J"]})
   stack8 = struct(Stack, %{elements: ["Z", "Q", "N", "B", "W"]})
   stack9 = struct(Stack, %{elements: ["H", "L", "F", "C", "G", "T", "J"]})
-
 
   defstruct stacks: [stack1, stack2, stack3, stack4, stack5, stack6, stack7, stack8, stack9]
 
