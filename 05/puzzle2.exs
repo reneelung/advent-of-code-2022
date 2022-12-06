@@ -9,6 +9,22 @@ defmodule Stack do
    %Stack{elements: [stack.elements | element] |> List.flatten()}
   end
 
+  def lift(%Stack{elements: []}), do: raise("Stack is empty!")
+  def lift(%Stack{elements: [element]}) do
+    {[element], %Stack{elements: []}}
+  end
+  def lift(stack, num) do
+    els = Enum.slice(stack.elements, -num, num)
+    rest =
+      case Stack.depth(stack) - num do
+        qty when qty < 0 ->
+          []
+        _ ->
+          Enum.slice(stack.elements, 0, Stack.depth(stack) - num)
+      end
+    {els, %Stack{elements: rest}}
+  end
+
   def pop(%Stack{elements: []}), do: raise("Stack is empty!")
   def pop(%Stack{elements: [element]}) do
     {[element], %Stack{elements: []}}
@@ -59,7 +75,6 @@ defmodule Visualizer do
     |> Enum.each(&(Visualizer.print_row(padded_stacks, &1)))
     IO.puts("==========")
     IO.puts("\n")
-    IEx.pry()
   end
 end
 
@@ -105,11 +120,17 @@ defmodule Cargo do
     end
   end
 
+  def move_boxes(origin, target, quantity) do
+    {boxes, origin} = Stack.lift(origin, quantity)
+    target = Stack.push(target, boxes)
+    {origin, target}
+  end
+
   def move_cargo(cargo, []) do
     cargo.stacks
     |> Enum.with_index()
     |> Enum.each(fn {stack, index} ->
-      # IO.puts("Stack #{index + 1}: #{List.last(stack.elements)}")
+      IO.puts("Stack #{index + 1}: #{List.last(stack.elements)}")
     end)
   end
   def move_cargo(cargo, moves) do
@@ -130,7 +151,7 @@ defmodule Cargo do
 
       current_stacks = cargo.stacks
 
-      {updated_origin, updated_target} = Cargo.move_box(origin_stack, target_stack, quantity)
+      {updated_origin, updated_target} = Cargo.move_boxes(origin_stack, target_stack, quantity)
       # IO.puts("updated origin stack: #{inspect(updated_origin)}")
       # IO.puts("updated target stack: #{inspect(updated_target)}")
 
