@@ -11,11 +11,11 @@ const rd = readline.createInterface({
     console: false
 });
 
-var file_system = {};
-var history = [];
-var location_index;
-var total_sum = 0;
-var list_of_file_sizes = [];
+let file_system = {};
+let history = [];
+let location_index;
+let total_sum = 0;
+let list_of_file_sizes = [];
 
 function get_parent_path(history) {
   return history.join('.')
@@ -60,7 +60,7 @@ function summarize(file_system) {
   calculate_file_size(file_system)
   console.log(util.inspect(file_system, false, null, true))
   let free_space = TOTAL_SPACE - file_system.root.total_size
-  var size_of_directory_to_delete = file_system.root.total_size;
+  let size_of_directory_to_delete = file_system.root.total_size;
   get_file_sizes(file_system)
   size_of_directory_to_delete = get_size_of_directory_for_deletion(list_of_file_sizes, free_space)
   console.log("Total sum of sizes (less than 100K): ", total_sum)

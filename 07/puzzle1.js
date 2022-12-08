@@ -10,10 +10,10 @@ const rd = readline.createInterface({
     console: false
 });
 
-var file_system = {};
-var history = [];
-var location_index, current_directory, current_path;
-var total_sum = 0;
+let file_system = {};
+let history = [];
+let location_index, current_directory, current_path;
+let total_sum = 0;
 
 function get_parent_path(history) {
   return history.join('.')
